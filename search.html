@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>社区 | FlashMaster Pro</title>
+</head>
+<body>
+  <header><h1>公开卡组搜索</h1></header>
+
+  <input id="query" placeholder="关键词 / 标签" />
+  <button id="searchBtn">🔍 搜索</button>
+
+  <ul id="results"></ul>
+
+  <script type="module">
+    import { db }                    from './js/firebase.js';
+    import { collection, query,
+             where, getDocs }
+      from 'https://cdn.jsdelivr.net/npm/firebase@10.12.2/firestore/lite/index.esm.js';
+
+    const qInput = document.getElementById('query');
+    const results = document.getElementById('results');
+
+    document.getElementById('searchBtn').onclick = async () => {
+      const kw = qInput.value.trim().toLowerCase();
+      if (!kw) return;
+      results.textContent = '搜索中…';
+
+      try {
+        const q   = query(collection(db, 'publicSets'),
+                          where('keywords', 'array-contains', kw));
+        const snap = await getDocs(q);
+        results.innerHTML = '';
+        if (snap.empty) return results.textContent = '未找到结果。';
+
+        snap.forEach(doc => {
+          const li = document.createElement('li');
+          li.textContent = doc.data().title;
+          li.onclick = () => location.href =
+            `study.html?set=${doc.id}`;
+          results.appendChild(li);
+        });
+      } catch(e) {
+        results.textContent = '网络错误，请稍后重试。';
+      }
+    };
+  </script>
+</body>
+</html>
