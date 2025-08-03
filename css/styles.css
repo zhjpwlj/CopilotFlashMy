@@ -1,0 +1,37 @@
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --accent: #3f51b5;
+}
+[data-theme="dark"] {
+  --bg: #121212;
+  --fg: #eee;
+  --accent: #90caf9;
+}
+[data-theme="quizlet"] {
+  --bg: #f6f7fb;
+  --fg: #060857;
+  --accent: #4255ff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+header, nav, footer { padding: 0.5rem 1rem; }
+nav a { margin-right: 0.5rem; color: var(--accent); text-decoration: none; }
+button, input, select { margin: .25rem; }
+
+#studyArea .card {
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hint { color: #666; }
