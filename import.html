@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>导入导出 | FlashMaster Pro</title>
+</head>
+<body>
+  <header><h1>导入 / 导出</h1></header>
+
+  <input type="file" id="csvFile" accept=".csv" />
+  <button id="importBtn">导入 CSV</button>
+  <button id="exportBtn">导出当前卡组</button>
+
+  <script type="module">
+    import { parseCSV, exportToCSV } from './js/import.js';
+
+    const fileInput = document.getElementById('csvFile');
+
+    document.getElementById('importBtn').onclick = async () => {
+      const file = fileInput.files[0];
+      if (!file) return alert('请选择文件');
+      const text = await file.text();
+      const cards = parseCSV(text);
+      localStorage.setItem('importedSet', JSON.stringify(cards));
+      alert('导入成功！可在“学习”页面查看。');
+    };
+
+    document.getElementById('exportBtn').onclick = () => {
+      const cards = JSON.parse(
+        localStorage.getItem('currentSet') || '[]'
+      );
+      if (!cards.length) return alert('当前无卡片可导出');
+      exportToCSV(cards);
+    };
+  </script>
+</body>
+</html>
