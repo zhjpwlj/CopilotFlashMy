@@ -1,5 +1,5 @@
 /* 首页：卡组列表 + IndexedDB 离线缓存 */
-import { db }                              from './firebase.js';
+import { db }                              from 'https://zhjpwlj.github.io/CopilotFlashMy/firebase.js';
 import { collection, getDocs }
   from 'https://cdn.jsdelivr.net/npm/firebase@10.12.2/firestore/lite/index.esm.js';
 import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@8/+esm';
